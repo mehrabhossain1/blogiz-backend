@@ -28,16 +28,25 @@ async function run() {
 
     app.post("/api/v1/blogs", async (req, res) => {
       try {
-        const { title, description, publish_date, author_name, blog_image } =
-          req.body;
-
-        // Insert the new product into the MongoDB collection
-        const result = await blogsCollection.insertOne({
+        const {
+          id,
           title,
           description,
           publish_date,
           author_name,
           blog_image,
+          total_likes,
+        } = req.body;
+
+        // Insert the new product into the MongoDB collection
+        const result = await blogsCollection.insertOne({
+          id,
+          title,
+          description,
+          publish_date,
+          author_name,
+          blog_image,
+          total_likes,
         });
 
         res.status(201).json({
