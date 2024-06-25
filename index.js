@@ -63,18 +63,26 @@ async function run() {
       }
     });
 
-    app.get("/api/v1/products/:id", async (req, res) => {
+    // Get single blog
+    app.get("/api/v1/blogs/:id", async (req, res) => {
       try {
+        // const id = req.params.id;
+        // console.log(id);
+
+        // const blog = await blogsCollection.findOne({ _id: new ObjectId(id) });
+
         const id = req.params.id;
 
-        const product = await collection.findOne({ _id: new ObjectId(id) });
+        // get single blog
+        const blog = await blogsCollection.findOne({ id: id });
+        console.log(blog);
 
-        if (!product) {
-          return res.status(404).json({ error: "Product not found" });
+        if (!blog) {
+          return res.status(404).json({ error: "blog not found" });
         }
-        res.json(product);
+        res.json(blog);
       } catch (error) {
-        console.error("Error fetching product:", error);
+        console.error("Error fetching blog:", error);
         res.status(500).json({ error: "Internal server error" });
       }
     });
