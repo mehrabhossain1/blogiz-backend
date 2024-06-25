@@ -26,28 +26,26 @@ async function run() {
     const db = client.db("blogiz");
     const blogsCollection = db.collection("blogs");
 
-    app.post("/api/v1/products", async (req, res) => {
+    app.post("/api/v1/blogs", async (req, res) => {
       try {
-        const { image, title, price, ratings, brand, description, flashSale } =
+        const { title, description, publish_date, author_name, blog_image } =
           req.body;
 
         // Insert the new product into the MongoDB collection
-        const result = await collection.insertOne({
-          image,
+        const result = await blogsCollection.insertOne({
           title,
-          price,
-          ratings,
-          brand,
           description,
-          flashSale,
+          publish_date,
+          author_name,
+          blog_image,
         });
 
         res.status(201).json({
-          message: "Product added successfully",
-          productId: result.insertedId,
+          message: "blog added successfully",
+          blogId: result.insertedId,
         });
       } catch (error) {
-        console.error("Error adding product:", error);
+        console.error("Error adding blog:", error);
         res.status(500).json({ error: "Internal server error" });
       }
     });
